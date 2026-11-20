@@ -3681,7 +3681,7 @@ def _patch_dxf_insunits(filename, insunits):
     """
     mm_tag = "$INSUNITS\n 70\n4\n"
     try:
-        with open(filename, "r", encoding="utf-8", errors="replace") as fh:
+        with pyopen(filename, "r", encoding="utf-8", errors="replace") as fh:
             content = fh.read()
         if mm_tag not in content:
             return  # R12 export (no $INSUNITS) or already correct
@@ -3692,7 +3692,7 @@ def _patch_dxf_insunits(filename, insunits):
             content = content.replace(
                 mm_tag, "$INSUNITS\n 70\n{}\n".format(insunits)
             )
-        with open(filename, "w", encoding="utf-8") as fh:
+        with pyopen(filename, "w", encoding="utf-8") as fh:
             fh.write(content)
     except OSError as exc:
         FreeCAD.Console.PrintWarning(
